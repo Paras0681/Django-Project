@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main-content %} 
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Incident Report form</h4>
+            <div class="alert alert-primary" role="alert">
+                {% for message in messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+            <form class="mt-4" method='POST'>
+            {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control" id="nametext1" placeholder="User name:  {{user.username | title}}"
+                        disabled>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="exampleFormControlSelect1">Choose the location: </label>
+                    <select class="form-control" id="select_location" name='select_location'>
+                        <option selected>Choose...</option>
+                        <option value="CH">Coporate Headoffice</option>
+                        <option value="OD">Operation Depratment</option>
+                        <option value="WS">Work Station</option>
+                        <option value="MD">Marketing Division</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Incident depratment: </label>
+                    <textarea class="form-control" rows="3" placeholder="Text Here..." name='incident_dept'></textarea>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputHorizontalSuccess"
+                        class="col-sm-2 col-form-label">Date: </label>
+                    <div class="col-sm-5">
+                        <input type="date" class="form-control" id="date" name='date'>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputHorizontalSuccess"
+                        class="col-sm-2 col-form-label">Time: </label>
+                    <div class="col-sm-5">
+                        <input type="time" class="form-control" id="date" name='time'>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label>Incident location: </label>
+                    <textarea class="form-control" rows="3" placeholder="Text Here..."></textarea>
+                </div> 
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Initail Severity: </label>
+                    <select class="form-control" id="exampleFormControlSelect1" name='severity'>
+                        <option selected>Choose...</option>
+                        <option value="M">Mild</option>
+                        <option value="MO">Moderate</option>
+                        <option value="S">Severe</option>
+                        <option value="F">Fatal</option>
+                    </select>
+                </div> 
+
+                <div class="form-group">
+                    <label>Suspected cause: </label>
+                    <textarea class="form-control" rows="3" placeholder="Text Here..." name='sus_cause'></textarea>
+                </div> 
+
+                <div class="form-group">
+                    <label>Immediate action taken: </label>
+                    <textarea class="form-control" rows="3" placeholder="Text Here..." name='imm_action'></textarea>
+                </div>
+                <div class="form-group">
+                    <p>Sub incident types:</p>
+                        <label> 
+                        <input type="radio" id="customRadio1" name="incident_types"
+                            value='E'>Envrionmental incident
+                        </label>
+                        <input type="radio" id="customRadio2" name="incident_types"
+                            value='I'> 
+                        <label>Injury/Illness</label>
+                        <input type="radio" id="customRadio3" name="incident_types"
+                          value='P'>
+                        <label>Poperty Damage</label>
+                        <input type="radio" id="customRadio3" name="incident_types"
+                            value='V'>
+                        <label>Vehicle</label>
+                        <input type="radio" id="customRadio3" name="incident_types"
+                            value='O'>
+                        <label>Other</label>
+                </div>                                                                                                                                                                              
+
+                <div class="form-actionss">
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-info">Save</button>
+                        <button type="reset" class="ml-2 btn btn-warning">Reset</button>
+                        <button type="submit" class="ml-5 btn btn-success">Submit</button>
+                        <button type="cancel" class="ml-2 btn btn-danger">Cancel</button>
+                    </div>
+                </div>                              
+            </form>
+        </div>
+    </div>
+{% endblock main-content %}

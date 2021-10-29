@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main-content %} 
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Saved Incidents</h4>
+            <h6 class="card-title mt-5"><i
+                    class="mr-1 font-18 mdi mdi-numeric-1-box-multiple-outline"></i> Table With
+                Outside Padding</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for  d in  data %}
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>{{d.user}}</td>
+                                <td>{{d.location}}</td>
+                                <td>{{d.incident_department}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+{% endblock main-content %}
