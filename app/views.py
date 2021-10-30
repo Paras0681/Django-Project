@@ -9,6 +9,10 @@ from . models import Report_info
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+
+# <!-- ============================================================== -->
+# <!-- This is Login function made to handle login of the website -->
+# <!-- ============================================================== -->
 def login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -25,6 +29,10 @@ def login(request):
     else:
         return render(request, 'login.html')
 
+
+# <!-- ============================================================== -->
+# <!-- This is Register function made to handle login of the website -->
+# <!-- ============================================================== -->
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -41,17 +49,26 @@ def register(request):
             messages.info(request, "Password Taken")
             return redirect('register')
         else:
-            user = User.objects.create_user(username=username, password=password, email=email)
-            user.save();
+            user = User.objects.create_user(
+                username=username, password=password, email=email)
+            user.save()
             messages.info(request, 'New User created')
         return redirect('index')
     else:
         return render(request, 'register.html')
 
+
+# <!-- ============================================================== -->
+# <!-- This is Logout function made to handle login of the website -->
+# <!-- ============================================================== -->
 def logout(request):
     auth.logout(request)
     return redirect('login')
 
+
+# <!-- ============================================================== -->
+# <!-- This is Report function made to handle login of the website -->
+# <!-- ============================================================== -->
 @login_required(login_url='login')
 def report(request):
     if request.method == 'POST':
@@ -68,32 +85,43 @@ def report(request):
             if not user or not select_location or not incident_dept:
                 messages.error(request, 'All fields are mandatory')
                 return redirect('report')
-            data = Report_info(location=select_location, incident_department=incident_dept, date=date, incident_location=incident_location, initial_severity=severity, suspected_cause=sus_cause,incident_types=incident_types, action_taken=imm_action, user=user)
+            data = Report_info(location=select_location, incident_department=incident_dept, date=date, incident_location=incident_location,
+                               initial_severity=severity, suspected_cause=sus_cause, incident_types=incident_types, action_taken=imm_action, user=user)
             data.save()
             messages.info(request, 'New Report created')
             return render(request, 'report.html')
         except Exception as e:
-            messages.error(request,'An error occured.')
+            messages.error(request, 'An error occured.')
             return redirect('report')
 
     return render(request, 'report.html')
 
-
+# <!-- ============================================================== -->
+# <!-- This is HomeView class made to handle login of the website -->
+# <!-- ============================================================== -->
 class HomeView(View):
     template_name = 'index.html'
+
     def get(self, request):
         return render(request, self.template_name)
 
 
+# <!-- ============================================================== -->
+# <!-- This is  Saved_view class made to saved _incident page of the website. -->
+# <!-- ============================================================== -->
 class Saved_View(View):
     template_name = 'saved_incidents.html'
+
     def get(self, request):
         data = Report_info.objects.all()
-        return render(request, self.template_name, {'data':data})
+        return render(request, self.template_name, {'data': data})
 
-
+# <!-- ============================================================== -->
+# <!-- This is Sent_View class made to handle Sent_View page of the website -->
+# <!-- ============================================================== -->
 class Sent_View(View):
     template_name = 'saved_incidents.html'
+
     def get(self, request):
         data = Report_info.objects.filter(user=request.user)
-        return render(request, self.template_name, {'data':data})
+        return render(request, self.template_name, {'data': data})
